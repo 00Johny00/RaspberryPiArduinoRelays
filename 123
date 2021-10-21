@@ -24,14 +24,14 @@
 #define RELAY_7  10
 #define RELAY_8  11
 #define RELAY_9  12
-#define RELAY_10  13  // Arduino Digital I/O pin number for first relay (second on pin+1 etc)
+#define RELAY_10  13  
 #define RELAY_11  14
 #define RELAY_12  15
 #define RELAY_13  16
-#define RELAY_14  17 //Arduino Digital I/O pin number for first relay (second on pin+1 etc)
+#define RELAY_14  17 
 #define RELAY_15  18
 #define RELAY_16  19
-#define RELAY_17  20  // Arduino Digital I/O pin number for first relay (second on pin+1 etc)
+#define RELAY_17  20  
 #define RELAY_18  21
 #define RELAY_19  22
 #define RELAY_20  23
@@ -92,9 +92,7 @@
 
 void before() { 
   for (int sensor=1, pin=RELAY_1; sensor<=NUMBER_OF_RELAYS;sensor++, pin++) {
-    // Then set relay pins in output mode
     pinMode(pin, OUTPUT);   
-    // Set relay to last known state (using eeprom storage) 
     digitalWrite(pin, loadState(sensor)?RELAY_ON:RELAY_OFF);
   }
 }
@@ -132,9 +130,7 @@ Bounce debouncer31 = Bounce();
 Bounce debouncer32 = Bounce();
 
 void setup() { 
-  // Setup locally attached sensors
   delay(10000);
-   // Setup the button.
   pinMode(BUTTON_PIN, INPUT_PULLUP);
   pinMode(BUTTON2_PIN, INPUT_PULLUP);
   pinMode(BUTTON3_PIN, INPUT_PULLUP);
@@ -167,21 +163,18 @@ void setup() {
   pinMode(BUTTON30_PIN, INPUT_PULLUP);
   pinMode(BUTTON31_PIN, INPUT_PULLUP);
   pinMode(BUTTON32_PIN, INPUT_PULLUP);
-  // After setting up the button, setup debouncer.
   debouncer.attach(BUTTON_PIN);
   debouncer.interval(5);
   debouncer2.attach(BUTTON2_PIN);
   debouncer2.interval(5);
   debouncer3.attach(BUTTON3_PIN);
   debouncer3.interval(5);
-  
-   debouncer4.attach(BUTTON4_PIN);
+  debouncer4.attach(BUTTON4_PIN);
   debouncer4.interval(5);
   debouncer5.attach(BUTTON5_PIN);
   debouncer5.interval(5);
   debouncer6.attach(BUTTON6_PIN);
   debouncer6.interval(5); 
-  
   debouncer7.attach(BUTTON7_PIN);
   debouncer7.interval(5);
   debouncer8.attach(BUTTON8_PIN);
@@ -189,35 +182,32 @@ void setup() {
   debouncer9.attach(BUTTON9_PIN);
   debouncer9.interval(5);
   
- debouncer10.attach(BUTTON10_PIN);
+  debouncer10.attach(BUTTON10_PIN);
   debouncer10.interval(5);
   debouncer11.attach(BUTTON11_PIN);
   debouncer11.interval(5);
   debouncer12.attach(BUTTON12_PIN);
   debouncer12.interval(5);
   
-   debouncer13.attach(BUTTON13_PIN);
+  debouncer13.attach(BUTTON13_PIN);
   debouncer13.interval(5);
   debouncer14.attach(BUTTON14_PIN);
   debouncer14.interval(5);
   debouncer15.attach(BUTTON15_PIN);
   debouncer15.interval(5);
-  
-   debouncer16.attach(BUTTON16_PIN);
+  debouncer16.attach(BUTTON16_PIN);
   debouncer16.interval(5);
   debouncer17.attach(BUTTON17_PIN);
   debouncer17.interval(5);
   debouncer18.attach(BUTTON18_PIN);
   debouncer18.interval(5); 
-  
   debouncer19.attach(BUTTON19_PIN);
   debouncer19.interval(5);
   debouncer20.attach(BUTTON20_PIN);
   debouncer20.interval(5);
   debouncer21.attach(BUTTON21_PIN);
   debouncer21.interval(5);
-  
- debouncer22.attach(BUTTON22_PIN);
+  debouncer22.attach(BUTTON22_PIN);
   debouncer22.interval(5);
   debouncer23.attach(BUTTON23_PIN);
   debouncer23.interval(5);
@@ -292,11 +282,8 @@ MyMessage msg32(32, V_LIGHT);
 
 
 void loop() { 
-  // Send locally attached sensor data here 
   if (debouncer.update()) {
-    // Get the update value.
     int value = debouncer.read();
-    // Send in the new value.
     if(value == LOW){
          saveState(1, !loadState(1));
          digitalWrite(RELAY_1, loadState(1)?RELAY_ON:RELAY_OFF);
